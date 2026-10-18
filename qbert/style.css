@@ -1,0 +1,217 @@
+/* Q*bert clone — page layout and DOM overlays. The game itself is drawn on the canvas. */
+
+:root {
+  --orange: #f7931e;
+  --yellow: #ffe36b;
+  --blue: #9aa0ff;
+  --font: "Courier New", Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+/* --u = one logical canvas pixel in CSS pixels (set by main.js) */
+#stage {
+  --u: 1px;
+  position: relative;
+  width: 640px;
+  height: 540px;
+  border: 2px solid #222;
+  box-shadow: 0 0 40px rgba(247, 147, 30, 0.15);
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: auto;
+  touch-action: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 12);
+  padding: calc(var(--u) * 20);
+  background: rgba(0, 0, 0, 0.78);
+  text-align: center;
+  font-size: calc(var(--u) * 15);
+}
+
+.overlay.hidden,
+.hidden {
+  display: none;
+}
+
+.logo {
+  margin: 0;
+  font-size: calc(var(--u) * 84);
+  letter-spacing: calc(var(--u) * 4);
+  color: var(--orange);
+  text-shadow:
+    calc(var(--u) * 4) calc(var(--u) * 4) 0 #b4500e,
+    0 0 calc(var(--u) * 24) rgba(247, 147, 30, 0.6);
+}
+
+.logo span {
+  color: #ff3b8d;
+}
+
+h2 {
+  margin: 0;
+  font-size: calc(var(--u) * 48);
+  color: var(--orange);
+  text-shadow: calc(var(--u) * 3) calc(var(--u) * 3) 0 #b4500e;
+}
+
+h2.gameover {
+  color: #ff4040;
+  text-shadow: calc(var(--u) * 3) calc(var(--u) * 3) 0 #6a0000;
+}
+
+.tag {
+  margin: 0;
+  color: var(--yellow);
+  font-weight: bold;
+}
+
+/* Diamond layout matching the four hop directions */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, calc(var(--u) * 170));
+  gap: calc(var(--u) * 8) calc(var(--u) * 24);
+}
+
+.key {
+  padding: calc(var(--u) * 6) calc(var(--u) * 8);
+  border: 1px solid #444;
+  border-radius: calc(var(--u) * 6);
+  background: #111;
+  font-weight: bold;
+}
+
+.key b {
+  color: var(--orange);
+  margin-right: calc(var(--u) * 8);
+}
+
+.legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: calc(var(--u) * 13);
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin: 0 0.35em 0 0.15em;
+  border-radius: 50%;
+  vertical-align: -0.05em;
+}
+
+.dot.red { background: #e8202a; }
+.dot.purple { background: #9b30d0; }
+.dot.green { background: #2fd64a; }
+.dot.violet { background: #6a4cff; }
+
+.btn {
+  font-family: var(--font);
+  font-weight: bold;
+  font-size: calc(var(--u) * 22);
+  padding: calc(var(--u) * 10) calc(var(--u) * 34);
+  color: #000;
+  background: var(--orange);
+  border: none;
+  border-radius: calc(var(--u) * 8);
+  box-shadow: 0 calc(var(--u) * 4) 0 #b4500e;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: #ffb04d;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.btn:active {
+  transform: translateY(calc(var(--u) * 2));
+  box-shadow: 0 calc(var(--u) * 2) 0 #b4500e;
+}
+
+.small {
+  margin: 0;
+  font-size: calc(var(--u) * 12);
+  color: var(--blue);
+}
+
+.score-line {
+  margin: 0;
+  font-size: calc(var(--u) * 22);
+}
+
+.score-line b {
+  color: var(--orange);
+}
+
+.new-high {
+  margin: 0;
+  color: #7cf04a;
+  font-weight: bold;
+  animation: blink 0.6s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.2; }
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  font-size: 12px;
+  color: #888;
+}
+
+.link-btn {
+  font-family: var(--font);
+  font-size: 12px;
+  color: var(--orange);
+  background: none;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}

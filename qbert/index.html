@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q*bert Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <div id="stage">
+      <canvas id="game" aria-label="Q*bert game field"></canvas>
+
+      <section id="title-screen" class="overlay">
+        <h1 class="logo">Q<span>*</span>BERT</h1>
+        <p class="tag">Hop on every cube until the whole pyramid shows the target color!</p>
+
+        <div class="controls" aria-label="Controls">
+          <div class="key ul"><b>&#8598;</b>&larr; &middot; A &middot; Q</div>
+          <div class="key ur"><b>&#8599;</b>&uarr; &middot; W &middot; E</div>
+          <div class="key dl"><b>&#8601;</b>&darr; &middot; S &middot; Y/Z</div>
+          <div class="key dr"><b>&#8600;</b>&rarr; &middot; D &middot; C</div>
+        </div>
+
+        <ul class="legend">
+          <li><i class="dot red"></i>Red ball &amp; <i class="dot purple"></i>Coily: deadly &ndash; lure Coily off with a disc (500)</li>
+          <li><i class="dot green"></i>Green ball: freezes enemies (100) &middot; Slick &amp; Sam: catch them (300)</li>
+          <li><i class="dot violet"></i>Ugg &amp; Wrong-Way walk along the cube sides &ndash; avoid them</li>
+        </ul>
+
+        <button id="btn-start" class="btn">START</button>
+        <p class="small">Enter / Space start &middot; P / Esc pause &middot; M sound</p>
+      </section>
+
+      <section id="pause-screen" class="overlay hidden">
+        <h2>PAUSED</h2>
+        <button id="btn-resume" class="btn">RESUME</button>
+        <p class="small">P / Esc to continue</p>
+      </section>
+
+      <section id="gameover-screen" class="overlay hidden">
+        <h2 class="gameover">GAME OVER</h2>
+        <p class="score-line">Score <b id="final-score">0</b></p>
+        <p class="small" id="final-level"></p>
+        <p class="score-line">High score <b id="final-high">0</b></p>
+        <p id="new-high" class="new-high hidden">NEW HIGH SCORE!</p>
+        <button id="btn-restart" class="btn">PLAY AGAIN</button>
+      </section>
+    </div>
+
+    <footer>
+      <span>&uarr; up-right &middot; &rarr; down-right &middot; &darr; down-left &middot; &larr; up-left &middot; Numpad 7/9/1/3 &middot; tap around Q*bert</span>
+      <button id="btn-mute" class="link-btn" type="button">Sound: on (M)</button>
+    </footer>
+  </main>
+
+  <!-- Classic scripts (no modules) so the game also runs from file:// -->
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
