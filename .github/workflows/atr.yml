@@ -1,0 +1,41 @@
+name: atr
+
+on:
+  pull_request:
+    paths:
+      - "atr/**"
+      - ".github/workflows/atr.yml"
+  push:
+    branches: [main]
+    paths:
+      - "atr/**"
+      - ".github/workflows/atr.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: atr
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Test
+        run: bun test
+      - name: Build (one HTML file, size budget)
+        run: bun run build
+      - name: Browser check (phone/desktop, all modes, all worlds)
+        run: bun run check:browser
+        env:
+          CHROMIUM: /usr/bin/google-chrome
